@@ -1,7 +1,6 @@
 import './globals.css'
 import React from 'react'
-import LogoutButton from '../components/LogoutButton'
-import Link from 'next/link'
+import Header from '../components/Header'
 
 export const metadata = {
   title: 'AI Search Visibility Tracker',
@@ -21,14 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <div className="min-h-screen">
-          <header className="bg-white shadow-sm">
-            <div className="container py-4 flex items-center justify-between">
-              <Link href="/projects" className="text-lg font-semibold hover:text-blue-600">
-                AEO Dashboard
-              </Link>
-              <LogoutButton />
-            </div>
-          </header>
+          <Header />
           <main className="container py-6">{children}</main>
         </div>
       </body>
