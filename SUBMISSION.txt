@@ -217,7 +217,7 @@ All requirements met and exceeded!
 END OF SUBMISSION
 ===========================================
 
-Submitted by: Vinit Kumar
+Submitted by: Vinit
 Date: October 19, 2025
 Assignment: B — AEO (AI-Search Visibility) Tracker
 Status: Complete ✅

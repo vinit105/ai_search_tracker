@@ -7,7 +7,8 @@
 
 **Live Deployment:** https://ai-search-tracker.vercel.app/login  
 **GitHub Repository:** https://github.com/vinit105/ai_search_tracker  
-**Demo Video:** [Optional - Add Loom link here if recorded]
+**Demo Video:** [Optional - Add Loom link here if recorded]  
+**Screenshots:** See `screenshots/` folder in repository (7 screenshots)
 
 ---
 
@@ -218,7 +219,41 @@ The seed script generates realistic data:
 
 ---
 
-## 🚀 Setup Instructions
+## 📸 Screenshots
+
+### 1. Login Page
+Authentication interface with demo credentials
+<img src="screenshots/login.png" alt="Login Page" width="800">
+
+### 2. Supabase Authentication Setup
+User authentication configuration in Supabase
+<img src="screenshots/supabase_authentication.png" alt="Supabase Authentication" width="800">
+
+### 3. Supabase SQL Schema
+Database schema with RLS policies
+<img src="screenshots/supabase_sql.png" alt="Supabase SQL Schema" width="800">
+
+### 4. Dashboard - Projects List
+Dashboard showing all 5 demo projects
+<img src="screenshots/dashboard.png" alt="Projects Dashboard" width="800">
+
+### 5. Dashboard - Detailed View
+Project metrics and statistics
+<img src="screenshots/dashboard2.png" alt="Dashboard Details" width="800">
+
+### 6. Project Overview
+Visibility score and summary metrics
+<img src="screenshots/project.png" alt="Project Overview" width="800">
+
+### 7. Project Details - Trends & Breakdown
+Trend charts, engine breakdown, and recommendations
+<img src="screenshots/project2.png" alt="Project Details" width="800">
+
+All screenshots are available in the GitHub repository at: https://github.com/vinit105/ai_search_tracker/tree/main/screenshots
+
+---
+
+## �🚀 Setup Instructions
 
 ### 1. Clone Repository
 ```bash
@@ -429,7 +464,7 @@ All requirements have been met and exceeded with additional features like keywor
 
 ---
 
-**Submitted by:** Vinit Kumar  
+**Submitted by:** Vinit  
 **Date:** October 19, 2025  
 **Assignment:** B — AEO (AI-Search Visibility) Tracker  
 **Status:** Complete ✅
