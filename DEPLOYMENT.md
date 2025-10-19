@@ -16,8 +16,7 @@ git init
 # Add all files
 git add .
 
-# Commit
-git commit -m "Initial commit - AI Search Visibility Tracker"
+# Commit;
 
 # Create main branch
 git branch -M main
