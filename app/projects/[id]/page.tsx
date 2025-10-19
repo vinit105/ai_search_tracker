@@ -41,6 +41,53 @@ export default async function ProjectPage({ params }: Props) {
 
   const trend = Object.keys(byDay).map((d) => ({ date: d, value: Math.round((byDay[d].present / byDay[d].total) * 100) }))
 
+  // Calculate engine breakdown
+  const engines = ['ChatGPT', 'Gemini', 'Claude', 'Perplexity']
+  const engineStats = engines.map(engine => {
+    const engineChecks = checks.filter(c => c.engine === engine)
+    const present = engineChecks.filter(c => c.presence).length
+    const total = engineChecks.length
+    const percentage = total > 0 ? Math.round((present / total) * 100) : 0
+    return { engine, percentage, present, total }
+  })
+
+  // Calculate keyword stats
+  const keywordStats: Record<string, { total: number; present: number; engines: string[] }> = {}
+  checks.forEach(c => {
+    if (!keywordStats[c.keyword]) {
+      keywordStats[c.keyword] = { total: 0, present: 0, engines: [] }
+    }
+    keywordStats[c.keyword].total++
+    if (c.presence) {
+      keywordStats[c.keyword].present++
+      if (!keywordStats[c.keyword].engines.includes(c.engine)) {
+        keywordStats[c.keyword].engines.push(c.engine)
+      }
+    }
+  })
+
+  // Generate recommendations
+  const recommendations: string[] = []
+  const missingEngines = engineStats.filter(e => e.percentage < 30).map(e => e.engine)
+  if (missingEngines.length > 0) {
+    recommendations.push(`⚠️ Low visibility on ${missingEngines.join(', ')}`)
+  }
+  
+  const lowCitationKeywords = Object.entries(keywordStats)
+    .filter(([_, stats]) => stats.present < stats.total * 0.4)
+    .map(([kw]) => kw)
+  if (lowCitationKeywords.length > 0) {
+    recommendations.push(`📉 Low citations for: ${lowCitationKeywords.slice(0, 3).join(', ')}`)
+  }
+
+  const topKeywords = Object.entries(keywordStats)
+    .sort((a, b) => (b[1].present / b[1].total) - (a[1].present / a[1].total))
+    .slice(0, 3)
+    .map(([kw]) => kw)
+  if (topKeywords.length > 0) {
+    recommendations.push(`✅ Best performing: ${topKeywords.join(', ')}`)
+  }
+
   return (
     <div>
       <div className="flex items-center gap-4 mb-4">
@@ -59,14 +106,69 @@ export default async function ProjectPage({ params }: Props) {
         {project?.domain || 'Project'} 
         {project?.brand && <span className="text-lg text-slate-500 ml-2">({project.brand})</span>}
       </h2>
+
+      {/* Recommendations Section */}
+      {recommendations.length > 0 && (
+        <div className="bg-blue-50 border border-blue-200 p-4 rounded mb-4">
+          <h3 className="font-semibold mb-2 text-blue-900">💡 Recommendations</h3>
+          <ul className="space-y-1">
+            {recommendations.map((rec, i) => (
+              <li key={i} className="text-sm text-blue-800">{rec}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="col-span-1 bg-white p-4 rounded shadow-sm">
           <h3 className="text-sm text-slate-500">Visibility Score</h3>
           <div className="text-3xl font-bold">{score}%</div>
         </div>
         <div className="col-span-2 bg-white p-4 rounded shadow-sm">
-          <h3 className="text-sm text-slate-500 mb-2">7-day Trend</h3>
+          <h3 className="text-sm text-slate-500 mb-2">14-day Trend</h3>
           <TrendChart data={trend} />
+        </div>
+      </div>
+
+      {/* Engine Breakdown */}
+      <div className="bg-white p-4 rounded shadow-sm mb-6">
+        <h3 className="font-semibold mb-4">Breakdown by Engine</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {engineStats.map(stat => (
+            <div key={stat.engine} className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{stat.percentage}%</div>
+              <div className="text-sm text-slate-600">{stat.engine}</div>
+              <div className="text-xs text-slate-400">{stat.present}/{stat.total} present</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Keyword Breakdown */}
+      <div className="bg-white p-4 rounded shadow-sm mb-6">
+        <h3 className="font-semibold mb-4">Breakdown by Keyword</h3>
+        <div className="grid grid-cols-1 gap-2">
+          {Object.entries(keywordStats).slice(0, 10).map(([keyword, stats]) => {
+            const percentage = Math.round((stats.present / stats.total) * 100)
+            return (
+              <Link 
+                key={keyword}
+                href={`/projects/${id}/keyword/${encodeURIComponent(keyword)}`}
+                className="flex items-center justify-between p-3 hover:bg-slate-50 rounded border"
+              >
+                <div className="flex-1">
+                  <div className="font-medium">{keyword}</div>
+                  <div className="text-xs text-slate-500">
+                    Present on: {stats.engines.join(', ') || 'None'}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-blue-600">{percentage}%</div>
+                  <div className="text-xs text-slate-400">{stats.present}/{stats.total}</div>
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </div>
 
