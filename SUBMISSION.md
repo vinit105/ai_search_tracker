@@ -377,17 +377,6 @@ Lists all 5 demo projects with visibility metrics
 
 ---
 
-## 🎬 Demo Video (Optional)
-
-[Add Loom link here showing:]
-- Login process
-- Navigating projects
-- Viewing dashboard metrics
-- Drilling down into keywords
-- API endpoint demonstration
-
----
-
 ## 📝 Additional Notes
 
 ### Project Highlights

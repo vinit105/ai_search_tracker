@@ -184,22 +184,6 @@ KEY ACHIEVEMENTS
 ✅ Interactive visualizations
 
 ===========================================
-LOOM DEMO VIDEO (OPTIONAL)
-===========================================
-
-[Add your Loom link here if you record one]
-
-Recommended demo flow:
-1. Login with demo credentials
-2. Browse 5 projects
-3. View project dashboard
-4. Explain visibility score
-5. Show trend chart
-6. Click keyword drill-down
-7. View recommendations
-8. Test API endpoint (optional)
-
-===========================================
 ADDITIONAL NOTES
 ===========================================
 
